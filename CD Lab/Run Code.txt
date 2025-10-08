@@ -1,0 +1,5 @@
+for running the code we have to follow some steps 
+
+step 1) flex file_name.l
+step 2) gcc lex.yy.c
+step 3) a.exe
