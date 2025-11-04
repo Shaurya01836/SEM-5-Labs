@@ -30,7 +30,7 @@ void main()
     line(x5, y5, x6, y6);
     line(x7, y7, x8, y8);
     printf("enter translation factor\n");
-    scanf("%d%d", &sf);
+    scanf("%d%d", &sf , &sy);
     setcolor(GREEN);
     rectangle(x11 + sf, y11 + sy, x21 + sf, y21 + sy);
     rectangle(x12 + sf, y12 + sy, x22 + sf, y22 + sy);

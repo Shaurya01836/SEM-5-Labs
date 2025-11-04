@@ -1,169 +1,85 @@
-
-
-#include <graphics.h>
-#include <conio.h>
 #include <stdio.h>
+#include <conio.h>
+#include <graphics.h>
 #include <math.h>
 
-#define PI 3.14159265358979323846
 
-/* Multiply two 3x3 matrices: C = A * B */
-void matMul3x3(double A[3][3], double B[3][3], double C[3][3])
+void draw_rectangle(int x[4], int y[4], int color)
 {
-    int i, j, k;
-    for (i = 0; i < 3; ++i)
-        for (j = 0; j < 3; ++j)
-        {
-            C[i][j] = 0.0;
-            for (k = 0; k < 3; ++k)
-                C[i][j] += A[i][k] * B[k][j];
-        }
+    setcolor(color);
+    line(x[0], y[0], x[1], y[1]);
+    line(x[1], y[1], x[2], y[2]);
+    line(x[2], y[2], x[3], y[3]);
+    line(x[3], y[3], x[0], y[0]);
 }
 
-/* Apply 3x3 matrix M to point (x,y) using homogeneous coords -> (x', y') */
-void applyTransform(double M[3][3], double x, double y, double *xout, double *yout)
-{
-    double hx = M[0][0] * x + M[0][1] * y + M[0][2] * 1.0;
-    double hy = M[1][0] * x + M[1][1] * y + M[1][2] * 1.0;
-    double hw = M[2][0] * x + M[2][1] * y + M[2][2] * 1.0;
-    if (hw != 0.0)
-    {
-        *xout = hx / hw;
-        *yout = hy / hw;
-    }
-    else
-    { /* fallback */
-        *xout = hx;
-        *yout = hy;
-    }
-}
-
-/* Create translation matrix T(tx, ty) */
-void translationMatrix(double tx, double ty, double T[3][3])
-{
-    T[0][0] = 1;
-    T[0][1] = 0;
-    T[0][2] = tx;
-    T[1][0] = 0;
-    T[1][1] = 1;
-    T[1][2] = ty;
-    T[2][0] = 0;
-    T[2][1] = 0;
-    T[2][2] = 1;
-}
-
-/* Create scaling matrix S(sx, sy) */
-void scalingMatrix(double sx, double sy, double S[3][3])
-{
-    S[0][0] = sx;
-    S[0][1] = 0;
-    S[0][2] = 0;
-    S[1][0] = 0;
-    S[1][1] = sy;
-    S[1][2] = 0;
-    S[2][0] = 0;
-    S[2][1] = 0;
-    S[2][2] = 1;
-}
-
-/* Create rotation matrix R(theta) where theta is in degrees */
-void rotationMatrix(double theta_deg, double R[3][3])
-{
-    double theta = theta_deg * PI / 180.0;
-    double c = cos(theta), s = sin(theta);
-    R[0][0] = c;
-    R[0][1] = -s;
-    R[0][2] = 0;
-    R[1][0] = s;
-    R[1][1] = c;
-    R[1][2] = 0;
-    R[2][0] = 0;
-    R[2][1] = 0;
-    R[2][2] = 1;
-}
-
-/* Draw polygon given arrays of x,y and number of vertices */
-void drawPolygonPoints(int x[], int y[], int n)
-{
-    int i;
-    for (i = 0; i < n; ++i)
-    {
-        int nx = (i + 1) % n;
-        line(x[i], y[i], x[nx], y[nx]);
-    }
-}
-
-int main()
+void main()
 {
     int gd = DETECT, gm;
-    int maxx, maxy, midx, midy;
-    initgraph(&gd, &gm, "C:\\TC\\BGI");
+    int i;
+    float sx, sy;
+    float angle_deg, t;
+    int tx, ty;
 
-    maxx = getmaxx();
-    maxy = getmaxy();
-    midx = maxx / 2;
-    midy = maxy / 2;
+   
+    int x[] = {100, 150, 150, 100};
+    int y[] = {100, 100, 150, 150};
 
-    double polyX[4] = {100, 160, 140, 80};
-    double polyY[4] = {-20, -20, -90, -70}; /* y negative to appear "up" like typical Cartesian */
+   
+    int x_scaled[4], y_scaled[4];
+    int x_rotated[4], y_rotated[4];
+    int x_final[4], y_final[4];
 
-    int n = 4;
+    initgraph(&gd, &gm, "C:\\TURBOC3\\BGI");
 
-    /* Draw axes */
-    setcolor(WHITE);
-    line(midx, 0, midx, maxy);
-    line(0, midy, maxx, midy);
-    outtextxy(10, 10, "Original Object (white)");
+    printf("COMPOSITE 2D TRANSFORMATIONS\n");
 
-    /* draw original polygon in white (offset to screen coords) */
+  
+    printf("Enter scaling factor for X (Sx): ");
+    scanf("%f", &sx);
+    printf("Enter scaling factor for Y (Sy): ");
+    scanf("%f", &sy);
+
+
+    printf("Enter rotation angle in degrees: ");
+    scanf("%f", &angle_deg);
+    t = angle_deg * (3.14 / 180.0); 
+
+
+    printf("Enter translation factor for X (Tx): ");
+    scanf("%d", &tx);
+    printf("Enter translation factor for Y (Ty): ");
+    scanf("%d", &ty);
+
+    cleardevice();
+
+   
+    draw_rectangle(x, y, WHITE);
+
+    /* --- Perform Composite Transformation --- */
+
+    for (i = 0; i < 4; i++)
     {
-        int sx[4], sy[4];
-        for (int i = 0; i < n; ++i)
-        {
-            sx[i] = (int)round(midx + polyX[i]);
-            sy[i] = (int)round(midy + polyY[i]);
-        }
-        setcolor(WHITE);
-        drawPolygonPoints(sx, sy, n);
+        x_scaled[i] = (int)(x[i] * sx);
+        y_scaled[i] = (int)(y[i] * sy);
     }
 
-    /* Get transformation parameters from user */
-    double sx_factor, sy_factor, angle_deg, tx, ty;
-    printf("Enter scaling factors (sx sy): ");
-    scanf("%lf %lf", &sx_factor, &sy_factor);
-    printf("Enter rotation angle in degrees (theta): ");
-    scanf("%lf", &angle_deg);
-    printf("Enter translation (tx ty): ");
-    scanf("%lf %lf", &tx, &ty);
 
-    /* Build matrices */
-    double S[3][3], R[3][3], T[3][3];
-    scalingMatrix(sx_factor, sy_factor, S);
-    rotationMatrix(angle_deg, R);
-    translationMatrix(tx, ty, T);
-
-    double temp[3][3], M[3][3];
-    matMul3x3(R, S, temp); /* temp = R * S */
-    matMul3x3(T, temp, M); /* M = T * (R * S) = T * R * S */
-
-    /* Apply composite M to polygon and draw transformed polygon */
+    for (i = 0; i < 4; i++)
     {
-        int txs[4], tys[4];
-        double xout, yout;
-        for (int i = 0; i < n; ++i)
-        {
-            applyTransform(M, polyX[i], polyY[i], &xout, &yout);
-            txs[i] = (int)round(midx + xout);
-            tys[i] = (int)round(midy + yout);
-        }
-        setcolor(YELLOW);
-        outtextxy(10, 30, "Transformed Object (yellow)");
-        drawPolygonPoints(txs, tys, n);
+        x_rotated[i] = (int)(x_scaled[i] * cos(t) - y_scaled[i] * sin(t));
+        y_rotated[i] = (int)(x_scaled[i] * sin(t) + y_scaled[i] * cos(t));
     }
 
-    /* Also draw secondary visuals: show intermediary transforms if you want (optional) */
-    outtextxy(10, 50, "Press any key to exit...");
+  
+    for (i = 0; i < 4; i++)
+    {
+        x_final[i] = x_rotated[i] + tx;
+        y_final[i] = y_rotated[i] + ty;
+    }
+
+    draw_rectangle(x_final, y_final, GREEN);
+
     getch();
     closegraph();
-    return 0;
 }
