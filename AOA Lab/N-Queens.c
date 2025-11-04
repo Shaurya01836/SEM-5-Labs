@@ -26,15 +26,13 @@ int checkCol(int arr[8][8], int row, int col)
 
 int checkLeftDia(int arr[8][8], int row, int col)
 {
-    int diff = row - col;
-    for (int r = 0; r < 8; r++)
+    int r, c;
+
+    for (r = row, c = col; r >= 0 && c >= 0; r--, c--)
     {
-        for (int c = 0; c < 8; c++)
+        if (arr[r][c] == 1)
         {
-            if ((r - c) == diff && arr[r][c] == 1)
-            {
-                return 0;
-            }
+            return 0;
         }
     }
     return 1;
@@ -42,15 +40,13 @@ int checkLeftDia(int arr[8][8], int row, int col)
 
 int checkRightDia(int arr[8][8], int row, int col)
 {
-    int sum = row + col;
-    for (int r = 0; r < 8; r++)
+    int r, c;
+
+    for (r = row, c = col; r < 8 && c >= 0; r++, c--)
     {
-        for (int c = 0; c < 8; c++)
+        if (arr[r][c] == 1)
         {
-            if ((r + c) == sum && arr[r][c] == 1)
-            {
-                return 0;
-            }
+            return 0;
         }
     }
     return 1;
@@ -61,28 +57,39 @@ int isSafe(int arr[8][8], int row, int col)
     return (checkLeftDia(arr, row, col) && checkRightDia(arr, row, col) && checkCol(arr, row, col) && checkRow(arr, row, col));
 }
 
-void backTrack(int arr[8][8], int row, int col)
+int solveNQueens(int arr[8][8], int col)
 {
-    
+    if (col >= 8)
+        return 1;
+
+    for (int i = 0; i < 8; i++)
+    {
+        if (isSafe(arr, i, col))
+        {
+            arr[i][col] = 1;
+
+            if (solveNQueens(arr, col + 1))
+                return 1;
+
+            arr[i][col] = 0; // backtrack
+        }
+    }
+    return 0;
 }
 
 int main()
 {
     int arr[8][8] = {0};
 
-    printf("First queen is placed at (0,0) \n");
-    arr[0][0] = 1;
+    printf("Solving N Queens using backtrack\n");
 
-    for (int i = 1; i < 8; i++)
+    if (solveNQueens(arr, 0))
     {
-        for (int j = 0; j < 8; j++)
-        {
-            if (isSafe(arr, i, j))
-            {
-                arr[i][j] = 1;
-                break;
-            }
-        }
+        printf("Solution found:\n");
+    }
+    else
+    {
+        printf("No solution exists.\n");
     }
 
     for (int i = 0; i < 8; i++)

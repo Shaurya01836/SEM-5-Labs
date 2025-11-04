@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include <stdlib.h>     // Required for malloc() and exit()
-#include <conio.h>      // Required for kbhit() and getch()
+#include <stdlib.h>     
+#include <conio.h>      
 #include <graphics.h>
-#include <dos.h>        // Required for delay()
+#include <dos.h>       
 
 // --- Global Variables ---
 int ch, x, y, i, j, n;
