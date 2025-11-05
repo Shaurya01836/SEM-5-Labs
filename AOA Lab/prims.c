@@ -71,3 +71,20 @@ int main()
     printf("\nMinimum cost = %d\n", mincost);
     return 0;
 }
+
+// Implementation of Prim's Algorithm
+
+// Enter the number of vertices: 4
+
+// Enter the cost adjacency matrix:
+// 0 10 6 5
+// 10 0 0 15
+// 6 0 0 4
+// 5 15 4 0
+
+// The edges of Minimum Cost Spanning Tree are:
+// 1 edge (1,4) = 5
+// 2 edge (4,3) = 4
+// 3 edge (1,2) = 10
+
+// Minimum cost = 19

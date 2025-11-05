@@ -103,3 +103,14 @@ int main()
 
     return 0;
 }
+
+// Solving N Queens using backtrack
+// Solution found:
+// 0  0  1  0  0  0  0  0
+// 1  0  0  0  0  0  0  0
+// 0  0  0  0  1  0  0  0
+// 0  0  0  0  0  0  0  1
+// 0  1  0  0  0  0  0  0
+// 0  0  0  1  0  0  0  0
+// 0  0  0  0  0  1  0  0
+// 0  0  0  0  0  0  1  0

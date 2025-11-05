@@ -107,3 +107,26 @@ int main()
 
     return 0;
 }
+
+// Enter the number of elements
+// 4
+// Enter the profit and weights of the elements
+// For item no 1
+// 1 1
+// For item no 2
+// 2 3
+// For item no 3
+// 5 4
+// For item no 4
+// 6 5
+
+// Enter the capacity
+// 7
+
+// Items included are
+// Sl.no	weight	profit
+// 1	4	5
+// 2	3	2
+// Total profit = 7
+
+// Press Enter to exit...

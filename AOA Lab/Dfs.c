@@ -43,3 +43,18 @@ void main()
 	else
 getch();
 }
+
+
+//  Enter number of vertices: 4
+
+//  Enter the adjacency matrix:
+// 0 1 1 0
+// 1 0 1 1
+// 1 1 0 0
+// 0 1 0 0
+
+//  1->2
+//  2->3
+//  2->4
+
+//  Graph is connected

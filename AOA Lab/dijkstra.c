@@ -83,3 +83,20 @@ void main()
 
     getch();
 }
+
+// Enter the number of vertices: 5
+
+// Enter the cost adjacency matrix (use 9999 for no direct edge):
+// 0 10 9999 30 100
+// 10 0 50 9999 9999
+// 9999 50 0 20 10
+// 30 9999 20 0 60
+// 100 9999 10 60 0
+
+// Enter the source vertex (0 to 4): 0
+
+// Shortest distances from source vertex 0:
+// Vertex 0 → 1 = 10
+// Vertex 0 → 2 = 50
+// Vertex 0 → 3 = 30
+// Vertex 0 → 4 = 60

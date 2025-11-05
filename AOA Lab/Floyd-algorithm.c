@@ -1,6 +1,5 @@
 // implement all pairs shortest paths problem using floyd's algorithm.
 
-
 #include <stdio.h>
 #include <conio.h>
 
@@ -77,3 +76,33 @@ void main()
         }
     }
 }
+
+//  Enter the number of vertices : 4
+
+//  Enter the number of edges : 5
+
+//  Enter the end vertices of edge 0 with its weight
+// 1 2 3
+//  Enter the end vertices of edge 1 with its weight
+// 1 3 7
+//  Enter the end vertices of edge 2 with its weight
+// 2 4 2
+//  Enter the end vertices of edge 3 with its weight
+// 3 4 1
+//  Enter the end vertices of edge 4 with its weight
+// 4 1 6
+
+//  Matrix of input data:
+// 999     3       7       999
+// 999     999     999     2
+// 999     999     999     1
+// 6       999     999     999
+
+//  Transitive closure:
+// 0       3       6       5
+// 8       0       999     2
+// 7       10      0       1
+// 6       9       13      0
+
+//  The shortest paths are:
+//  <1 2> = 3 <1 3> = 6 <1 4> = 5 <2 1> = 8 <2 3> = 999 <2 4> = 2 <3 1> = 7 <3 2> = 10 <3 4> = 1 <4 1> = 6 <4 2> = 9 <4 3> = 13

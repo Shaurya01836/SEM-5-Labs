@@ -41,3 +41,17 @@ void main()
             printf("%d\t", i);
     getch();
 }
+
+//  Enter the number of vertices: 5
+
+//  Enter graph data in matrix form:
+// 0 1 1 0 0
+// 0 0 0 1 0
+// 0 1 0 0 0
+// 0 0 0 0 1
+// 0 0 0 0 0
+
+//  Enter the starting vertex: 1
+
+//  The node which are reachable are:
+// 1	2	3	4	5

@@ -70,3 +70,22 @@ void warshalls(int path[10][10], int n)
         }
     }
 }
+
+// Enter the number of vertices (max 10): 4
+// Enter the adjacency matrix (1 if edge exists, 0 otherwise):
+// 0 1 0 0
+// 0 0 1 0
+// 0 0 0 1
+// 0 0 0 0
+
+// Initial Adjacency Matrix:
+// 0	1	0	0
+// 0	0	1	0
+// 0	0	0	1
+// 0	0	0	0
+
+// Transitive Closure Matrix (1 means a path exists):
+// 0	1	1	1
+// 0	0	1	1
+// 0	0	0	1
+// 0	0	0	0

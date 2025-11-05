@@ -64,3 +64,15 @@ void main()
     }
     topology();
 }
+
+// Enter number of jobs :6
+
+// Enter the adjacency matrix :
+// 0 0 0 0 0 0
+// 0 0 0 0 0 0
+// 0 0 0 1 0 0
+// 0 1 0 0 0 0
+// 1 1 0 0 0 0
+// 1 0 1 0 0 0
+// The topological sequence is :
+// 4 5 2 3 1 0
