@@ -1,0 +1,39 @@
+HIVE INSTALLATION ON WINDOWS
+
+Download Hive 2.1.0:
+https://archive.apache.org/dist/hive/hive-2.1.0/
+
+Download Derby 10.12.1.1:
+https://archive.apache.org/dist/db/derby/db-derby-10.12.1.1/
+
+Extract apache-hive-2.1.0-bin.tar.gz and place it under D:\Hive.
+Extract db-derby-10.12.1.1-bin.tar.gz and place it under D:\Derby.
+Copy hive-site.xml into D:\Hive\apache-hive-2.1.0-bin\conf.
+Copy all Derby libraries from the Derby lib directory into the Hive lib directory.
+
+User variables:
+HIVE_HOME=D:\Hive\apache-hive-2.1.0-bin
+HIVE_BIN=D:\Hive\apache-hive-2.1.0-bin\bin
+HIVE_LIB=D:\Hive\apache-hive-2.1.0-bin\lib
+DERBY_HOME=D:\Derby\db-derby-10.12.1.1-bin
+HADOOP_USER_CLASSPATH_FIRST=true
+
+Add the following to Path:
+D:\Hive\apache-hive-2.1.0-bin\bin
+D:\Derby\db-derby-10.12.1.1-bin\bin
+
+hive-site.xml:
+<configuration>
+	<property>
+		<name>javax.jdo.option.ConnectionURL</name>
+		<value>jdbc:derby:D:/Hive/metastore_db;create=true</value>
+	</property>
+	<property>
+		<name>javax.jdo.option.ConnectionDriverName</name>
+		<value>org.apache.derby.jdbc.EmbeddedDriver</value>
+	</property>
+	<property>
+		<name>hive.metastore.warehouse.dir</name>
+		<value>D:/Hive/warehouse</value>
+	</property>
+</configuration>
