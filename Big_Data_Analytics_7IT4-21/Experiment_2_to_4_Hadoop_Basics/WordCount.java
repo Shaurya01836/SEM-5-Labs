@@ -1,3 +1,4 @@
+//exp 3 
 package Experiment_2_to_4_Hadoop_Basics;
 
 import java.io.IOException;
@@ -17,53 +18,56 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class WordCount {
-	public static class Map extends Mapper<LongWritable, Text, Text, IntWritable> {
-		private static final IntWritable ONE = new IntWritable(1);
-		private final Text word = new Text();
 
-		@Override
-		public void map(LongWritable key, Text value, Context context)
-				throws IOException, InterruptedException {
-			StringTokenizer tokenizer = new StringTokenizer(value.toString());
-			while (tokenizer.hasMoreTokens()) {
-				word.set(tokenizer.nextToken());
-				context.write(word, ONE);
-			}
-		}
-	}
+    public static class Map extends Mapper<LongWritable, Text, Text, IntWritable> {
 
-	public static class Reduce extends Reducer<Text, IntWritable, Text, IntWritable> {
-		@Override
-		public void reduce(Text key, Iterable<IntWritable> values, Context context)
-				throws IOException, InterruptedException {
-			int sum = 0;
-			for (IntWritable value : values) {
-				sum += value.get();
-			}
-			context.write(key, new IntWritable(sum));
-		}
-	}
+        private static final IntWritable ONE = new IntWritable(1);
+        private final Text word = new Text();
 
-	public static void main(String[] args) throws Exception {
-		if (args.length != 2) {
-			System.err.println("Usage: WordCount <input> <output>");
-			System.exit(2);
-		}
+        @Override
+        public void map(LongWritable key, Text value, Context context)
+                throws IOException, InterruptedException {
+            StringTokenizer tokenizer = new StringTokenizer(value.toString());
+            while (tokenizer.hasMoreTokens()) {
+                word.set(tokenizer.nextToken());
+                context.write(word, ONE);
+            }
+        }
+    }
 
-		Configuration configuration = new Configuration();
-		Job job = Job.getInstance(configuration, "MyWordCountProgram");
-		job.setJarByClass(WordCount.class);
-		job.setMapperClass(Map.class);
-		job.setReducerClass(Reduce.class);
-		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(IntWritable.class);
-		job.setInputFormatClass(TextInputFormat.class);
-		job.setOutputFormatClass(TextOutputFormat.class);
+    public static class Reduce extends Reducer<Text, IntWritable, Text, IntWritable> {
 
-		Path outputPath = new Path(args[1]);
-		FileInputFormat.addInputPath(job, new Path(args[0]));
-		FileOutputFormat.setOutputPath(job, outputPath);
-		outputPath.getFileSystem(configuration).delete(outputPath, true);
-		System.exit(job.waitForCompletion(true) ? 0 : 1);
-	}
+        @Override
+        public void reduce(Text key, Iterable<IntWritable> values, Context context)
+                throws IOException, InterruptedException {
+            int sum = 0;
+            for (IntWritable value : values) {
+                sum += value.get();
+            }
+            context.write(key, new IntWritable(sum));
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        if (args.length != 2) {
+            System.err.println("Usage: WordCount <input> <output>");
+            System.exit(2);
+        }
+
+        Configuration configuration = new Configuration();
+        Job job = Job.getInstance(configuration, "MyWordCountProgram");
+        job.setJarByClass(WordCount.class);
+        job.setMapperClass(Map.class);
+        job.setReducerClass(Reduce.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
+        job.setInputFormatClass(TextInputFormat.class);
+        job.setOutputFormatClass(TextOutputFormat.class);
+
+        Path outputPath = new Path(args[1]);
+        FileInputFormat.addInputPath(job, new Path(args[0]));
+        FileOutputFormat.setOutputPath(job, outputPath);
+        outputPath.getFileSystem(configuration).delete(outputPath, true);
+        System.exit(job.waitForCompletion(true) ? 0 : 1);
+    }
 }
